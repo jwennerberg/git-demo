@@ -47,9 +47,21 @@ spec:
           - name: revision
             value: $(params.revision)
 
-      - name: noop-task
+      - name: yaml-lint-task
+        taskRef:
+          name: yaml-lint
         runAfter:
           - fetch-repository
+        workspaces:
+          - name: source
+            workspace: source
+        params:
+          - name: args
+            value: ["."]
+
+      - name: noop-task
+        runAfter:
+          - yaml-lint-task
         workspaces:
           - name: source
             workspace: source
@@ -63,17 +75,6 @@ spec:
               script: |
                 exit 0
 
-      - name: yaml-lint-task
-        taskRef:
-          name: yaml-lint
-        runAfter:
-          - fetch-repository
-        workspaces:
-          - name: source
-            workspace: source
-        params:
-          - name: args
-            value: ["."]
   workspaces:
   - name: source
     volumeClaimTemplate:
