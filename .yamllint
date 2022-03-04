@@ -31,3 +31,11 @@ rules:
   trailing-spaces: enable
   truthy:
     level: warning
+
+  # accept both     key:
+  #                   - item
+  #
+  # and             key:
+  #                 - item
+  indentation:
+    indent-sequences: whatever
